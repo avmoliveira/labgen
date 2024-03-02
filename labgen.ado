@@ -2,35 +2,35 @@
 *------------------------------------------ 
 *author: Alessandro V. M. Oliveira/ITA
 *------------------------------------------
-*v 1.0
+*v 1.0.1
 *examples
 discard
 
 *only multiplication
-labgen Mpg = mpg,  transf() or
-labgen Price = price,  transf(/1000) or
-labgen Weight = weight,  transf(/1000) or
-labgen Rep78 = rep78, or
+labgen Mpg = mpg
+labgen Price = price, transf(/1000)
+labgen Weight = weight, transf(/1000)
+labgen Rep78 = rep78
 reg Price Mpg Weight Rep78
 
 *zscore normalization
-labgen Mpg = mpg, z transf() or
-labgen Price = price, z transf(/1000) or
-labgen Weight = weight, z transf(/1000) or
-labgen Rep78 = rep78, or
+labgen Mpg = mpg, z
+labgen Price = price, z transf(/1000)
+labgen Weight = weight, z transf(/1000)
+labgen Rep78 = rep78
 reg Price Mpg Weight Rep78
 
 *ln
-labgen Mpg = mpg, ln transf() or
-labgen Price = price, ln transf(/1000) or
-labgen Weight = weight, ln transf(/1000) or
-labgen Rep78 = rep78, or
+labgen Mpg = mpg, ln
+labgen Price = price, ln transf(/1000)
+labgen Weight = weight, ln transf(/1000)
+labgen Rep78 = rep78
 reg Price Mpg Weight Rep78
 */
 
 program labgen, eclass byable(onecall) prop(svyb svyj svyr) 
 syntax anything(id = "=exp" equalok) [if] [in] ///
-		[, LN Z OR TRANSF(string) SUF(string) AFTER]
+		[, LN Z ORNOT TRANSF(string) SUF(string) AFTER EXP LADD(string)]
 
 	gettoken newvar 0 : 0, parse("= ")  
 	gettoken eqs 0 : 0, parse("= ")  
@@ -45,6 +45,12 @@ if "`z'"!=""&"`ln'"!="" {
 di as err "you must chose either z or ln"
 exit
 }
+
+if "`ladd'"!="" local labeladd = " (`ladd')"
+
+*original variables
+local or = "or"
+if "`ornot'"!="" local or == ""
 
 
 *suffix of original variables (if requested)
@@ -72,7 +78,7 @@ local vars = "`existingvar' `newvar'"
 if "`or'"!="" {
 gen `suf'`newvar' = `existingvar'`transf' `if' `in' 
 format `suf'`newvar' `: format `existingvar''
-label var `suf'`newvar' "`newvar'"
+label var `suf'`newvar' "`newvar'`labeladd'"
 if "`after'"!="" order `suf'`newvar', after(`newvar')
 note `suf'`newvar': gen `suf'`newvar' = `existingvar'`transf' `if' `in' 
 local vars = "`existingvar' `suf'`newvar' `newvar'"
@@ -93,7 +99,7 @@ local vars = "`existingvar' `newvar'"
 if "`or'"!="" {
 gen `suf'`newvar' = `existingvar'`transf' `if' `in' 
 format `suf'`newvar' `: format `existingvar''
-label var `suf'`newvar' "`newvar'"
+label var `suf'`newvar' "`newvar'`labeladd'"
 if "`after'"!="" order `suf'`newvar', after(`newvar')
 note `suf'`newvar': gen `suf'`newvar' = `existingvar'`transf' `if' `in' 
 local vars = "`existingvar' `suf'`newvar' `newvar'"
@@ -122,7 +128,7 @@ format `suf'`newvar' `: format `existingvar''
 label var `suf'`newvar' "`newvar'"
 if "`after'"!="" order `suf'`newvar', after(`newvar')
 note `suf'`newvar': gen `suf'`newvar' = `existingvar'`transf' `if' `in' 
-local vars = "`existingvar' `suf'`newvar' `newvar'"
+local vars = "`existingvar' `suf'`newvar' `newvar'`labeladd'"
 }
 }
 
