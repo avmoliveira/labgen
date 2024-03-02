@@ -1,0 +1,7 @@
+v 1
+d vartransform: module to generate new variables from transformations of existing variables and organize labels
+d 
+d Author: Alessandro V.M. Oliveira
+d
+d Distribution-Date: 20240302
+f vartransform.ado
