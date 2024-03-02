@@ -81,7 +81,6 @@ note `newvar': gen `newvar' = `existingvar'`transf' `if' `in'
 local vars = "`existingvar' `newvar'"
 
 if "`or'"!="" {
-local transf = ""
 gen `suf'`newvar' = `existingvar'`transf' `if' `in' 
 format `suf'`newvar' `: format `existingvar''
 label var `suf'`newvar' "`newvar'`labeladd'"
@@ -105,7 +104,6 @@ note `newvar': gen `newvar' = ln(`existingvar'`transf') `if' `in'
 local vars = "`existingvar' `newvar'"
 
 if "`or'"!="" {
-local transf = ""
 gen `suf'`newvar' = `existingvar'`transf' `if' `in' 
 format `suf'`newvar' `: format `existingvar''
 label var `suf'`newvar' "`newvar'`labeladd'"
@@ -134,7 +132,6 @@ note `newvar': gen `newvar' = (`existingvar'`transf' + `rmean')/`r(sd)' `if' `in
 local vars = "`existingvar' `newvar'"
 
 if "`or'"!="" {
-local transf = ""
 gen `suf'`newvar' = `existingvar'`transf' `if' `in' 
 format `suf'`newvar' `: format `existingvar''
 label var `suf'`newvar' "`newvar'"
