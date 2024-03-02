@@ -76,7 +76,7 @@ if "`ln'"=="" & "`z'"=="" {
 gen `newvar' = `existingvar'`transf' `if' `in' 
 format `newvar' `: format `existingvar''
 label var `newvar' "`newvar'"
-order `newvar', after(`existingvar')
+if "`after'"!="" order `newvar', after(`existingvar')
 note `newvar': gen `newvar' = `existingvar'`transf' `if' `in' 
 local vars = "`existingvar' `newvar'"
 
@@ -99,7 +99,7 @@ gen `newvar' = ln(`existingvar'`transf') `if' `in'
 local length = max(5,length("`existingvar'"))
 format `newvar' %`length'.2f
 label var `newvar' "`newvar'"
-order `newvar', after(`existingvar')
+if "`after'"!="" order `newvar', after(`existingvar')
 note `newvar': gen `newvar' = ln(`existingvar'`transf') `if' `in'
 local vars = "`existingvar' `newvar'"
 
@@ -127,7 +127,7 @@ gen `newvar' = (`existingvar'`transf' - `rmean')/`r(sd)' `if' `in'
 local length = max(5,length("`existingvar'"))
 format `newvar' %`length'.2f
 label var `newvar' "`newvar'"
-order `newvar', after(`existingvar')
+if "`after'"!="" order `newvar', after(`existingvar')
 note `newvar': gen `newvar' = (`existingvar'`transf' + `rmean')/`r(sd)' `if' `in'
 local vars = "`existingvar' `newvar'"
 
