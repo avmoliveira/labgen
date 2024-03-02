@@ -1,7 +1,0 @@
-v 1
-d labgen: module to generate new variables
-d 
-d Author: Alessandro V.M. Oliveira
-d
-d Distribution-Date: 20240302
-f labgen.ado
